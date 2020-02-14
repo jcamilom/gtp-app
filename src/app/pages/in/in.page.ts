@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InPage implements OnInit {
 
+  public items: string[] = [
+    'Pokémon Yellow',
+    'Mega Man X',
+    'The Legend of Zelda',
+    'Pac-Man',
+    'Super Mario World'
+  ];
+
   constructor() { }
 
   ngOnInit() {
