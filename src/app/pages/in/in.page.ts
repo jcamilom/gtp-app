@@ -20,4 +20,22 @@ export class InPage implements OnInit {
   ngOnInit() {
   }
 
+  public addItem(item: string, index: number): void {
+    console.log('add item buttom clicked');
+    this.items.push('new item');
+  }
+
+  public moveItem(item: string, index: number): void {
+    console.log('add item buttom clicked');
+    this.deleteItem(item, index)
+  }
+
+  public editItem(item: string, index: number): void {
+    console.log('add item buttom clicked');
+  }
+
+  public deleteItem(item: string, index: number): void {
+    this.items.splice(index, 1);
+  }
+
 }
