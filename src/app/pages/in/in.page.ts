@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-in',
@@ -15,23 +16,20 @@ export class InPage implements OnInit {
     'Super Mario World'
   ];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   public addItem(item: string, index: number): void {
-    console.log('add item buttom clicked');
-    this.items.push('new item');
+    this.router.navigate(['/item-detail'], { state: { item, mode: 'create' } });
   }
 
   public moveItem(item: string, index: number): void {
-    console.log('add item buttom clicked');
-    this.deleteItem(item, index)
   }
 
   public editItem(item: string, index: number): void {
-    console.log('add item buttom clicked');
+    this.router.navigate(['/item-detail'], { state: { item, mode: 'edit' } });
   }
 
   public deleteItem(item: string, index: number): void {
