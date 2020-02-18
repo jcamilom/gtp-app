@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { GeneralItem } from '../in/in.page';
 
 @Component({
   selector: 'app-item-detail',
@@ -11,10 +13,14 @@ export class ItemDetailPage implements OnInit {
 
   public form: FormGroup;
 
-  item: string;
-  mode: string;
+  private item: GeneralItem;
+  private mode: string;
 
-  constructor(private router: Router, private fb: FormBuilder) { }
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private location: Location
+  ) { }
 
   ngOnInit() {
     const formValue = { title: '', description: '' };
@@ -23,8 +29,8 @@ export class ItemDetailPage implements OnInit {
       this.item = navigation.extras.state.item;
       this.mode = navigation.extras.state.mode;
       if (this.mode === 'edit') {
-        formValue.title = 'title';
-        formValue.description = 'anything';
+        formValue.title = this.item.title;
+        formValue.description = this.item.description;
       }
     }
     this.form = this.fb.group({
@@ -35,6 +41,10 @@ export class ItemDetailPage implements OnInit {
 
   public submitForm(): void {
 
+  }
+
+  public navigateBack(): void {
+    this.location.back();
   }
 
 }

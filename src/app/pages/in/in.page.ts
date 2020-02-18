@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+export interface GeneralItem {
+  title: string;
+  description?: string;
+}
+
 @Component({
   selector: 'app-in',
   templateUrl: './in.page.html',
@@ -8,12 +13,22 @@ import { Router } from '@angular/router';
 })
 export class InPage implements OnInit {
 
-  public items: string[] = [
-    'Pokémon Yellow',
-    'Mega Man X',
-    'The Legend of Zelda',
-    'Pac-Man',
-    'Super Mario World'
+  public items: GeneralItem[] = [
+    {
+      title: 'Homework',
+      description: 'Do homework'
+    },
+    {
+      title: 'Workout',
+      description: 'Go to the gym'
+    },
+    {
+      title: 'Laundry',
+    },
+    {
+      title: 'Vacations',
+      description: 'Plan vacations'
+    },
   ];
 
   constructor(private router: Router) { }
@@ -21,18 +36,18 @@ export class InPage implements OnInit {
   ngOnInit() {
   }
 
-  public addItem(item: string, index: number): void {
+  public addItem(item: GeneralItem, index: number): void {
     this.router.navigate(['/item-detail'], { state: { item, mode: 'create' } });
   }
 
-  public moveItem(item: string, index: number): void {
+  public moveItem(item: GeneralItem, index: number): void {
   }
 
-  public editItem(item: string, index: number): void {
+  public editItem(item: GeneralItem, index: number): void {
     this.router.navigate(['/item-detail'], { state: { item, mode: 'edit' } });
   }
 
-  public deleteItem(item: string, index: number): void {
+  public deleteItem(item: GeneralItem, index: number): void {
     this.items.splice(index, 1);
   }
 
