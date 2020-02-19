@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import 'firebase/firestore';
+import { Observable } from 'rxjs';
 
 export interface GeneralItem {
+  id: string;
   title: string;
   description?: string;
 }
@@ -13,42 +17,29 @@ export interface GeneralItem {
 })
 export class InPage implements OnInit {
 
-  public items: GeneralItem[] = [
-    {
-      title: 'Homework',
-      description: 'Do homework'
-    },
-    {
-      title: 'Workout',
-      description: 'Go to the gym'
-    },
-    {
-      title: 'Laundry',
-    },
-    {
-      title: 'Vacations',
-      description: 'Plan vacations'
-    },
-  ];
+  private itemsCollection: AngularFirestoreCollection<GeneralItem>;
+  public items: Observable<GeneralItem[]>;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private firestore: AngularFirestore) { }
 
   ngOnInit() {
+    this.itemsCollection = this.firestore.collection<GeneralItem>('items');
+    this.items = this.itemsCollection.valueChanges({ idField: 'id' });
   }
 
-  public addItem(item: GeneralItem, index: number): void {
+  public addItem(item: GeneralItem): void {
     this.router.navigate(['/item-detail'], { state: { item, mode: 'create' } });
   }
 
-  public moveItem(item: GeneralItem, index: number): void {
+  public moveItem(item: GeneralItem): void {
   }
 
-  public editItem(item: GeneralItem, index: number): void {
+  public editItem(item: GeneralItem): void {
     this.router.navigate(['/item-detail'], { state: { item, mode: 'edit' } });
   }
 
-  public deleteItem(item: GeneralItem, index: number): void {
-    this.items.splice(index, 1);
+  public deleteItem(item: GeneralItem): void {
+    this.itemsCollection.doc<GeneralItem>(item.id).delete();
   }
 
 }
