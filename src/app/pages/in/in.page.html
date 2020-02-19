@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let item of items; index as i">
+    <ion-item-sliding *ngFor="let item of items | async; index as i">
       <ion-item (click)="editItem(item, i)">
         <ion-label>{{ item.title }}</ion-label>
       </ion-item>
