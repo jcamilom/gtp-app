@@ -3,6 +3,8 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GeneralItem } from '../in/in.page';
+import { AngularFirestore } from '@angular/fire/firestore';
+import 'firebase/firestore';
 
 @Component({
   selector: 'app-item-detail',
@@ -19,7 +21,8 @@ export class ItemDetailPage implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private location: Location
+    private location: Location,
+    private firestore: AngularFirestore,
   ) { }
 
   ngOnInit() {
@@ -40,7 +43,26 @@ export class ItemDetailPage implements OnInit {
   }
 
   public submitForm(): void {
-
+    const formValue = this.form.value;
+    if (this.mode === 'create') {
+      this.firestore.collection('items').add(formValue).then(() => {
+        this.navigateBack();
+      });
+    } else {
+      const valuesToUpdate: any = {};
+      for (const key of Object.keys(this.item)) {
+        if (key !== 'id' && formValue[key] !== this.item[key]) {
+          valuesToUpdate[key] = formValue[key];
+        }
+      }
+      if (Object.keys(valuesToUpdate).length !== 0) {
+        this.firestore.collection('items').doc<GeneralItem>(this.item.id).update(valuesToUpdate).then(() => {
+          this.navigateBack();
+        });
+      } else {
+        this.navigateBack();
+      }
+    }
   }
 
   public navigateBack(): void {
