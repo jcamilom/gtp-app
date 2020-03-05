@@ -1,5 +1,7 @@
 {
   "name": "gtd-app",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

@@ -1,0 +1,8 @@
+{
+  "appId": "io.gtd.xingke",
+  "appName": "gtd-app",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}
