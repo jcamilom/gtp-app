@@ -23,7 +23,7 @@ export class InPage implements OnInit {
   constructor(private router: Router, private firestore: AngularFirestore) { }
 
   ngOnInit() {
-    this.itemsCollection = this.firestore.collection<GeneralItem>('items');
+    this.itemsCollection = this.firestore.collection<GeneralItem>('items', ref => ref.where('state', '==', 'in'));
     this.items = this.itemsCollection.valueChanges({ idField: 'id' });
   }
 
