@@ -33,8 +33,14 @@ export class InPage implements OnInit {
     this.items = this.itemsCollection.valueChanges({ idField: 'id' });
   }
 
-  public addItem(item: GeneralItem): void {
-    this.router.navigate(['/item-detail'], { state: { item, mode: 'create' } });
+  public addItem(): void {
+    const state = {
+      mode: 'create',
+      item: {
+        state: 'in',
+      },
+    };
+    this.router.navigate(['/item-detail'], { state });
   }
 
   public editItem(item: GeneralItem): void {
