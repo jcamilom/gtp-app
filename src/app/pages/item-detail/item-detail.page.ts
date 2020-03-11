@@ -17,6 +17,7 @@ export class ItemDetailPage implements OnInit {
 
   private item: GeneralItem;
   private mode: string;
+  public stateOptions = ['in', 'next'];
 
   constructor(
     private router: Router,
@@ -26,7 +27,7 @@ export class ItemDetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    const formValue = { title: '', description: '' };
+    const formValue: GeneralItem = { id: '', title: '', description: '', state: '' };
     const navigation = this.router.getCurrentNavigation();
     if (navigation.extras.state) {
       this.item = navigation.extras.state.item;
@@ -35,10 +36,12 @@ export class ItemDetailPage implements OnInit {
         formValue.title = this.item.title;
         formValue.description = this.item.description;
       }
+      formValue.state = this.item.state;
     }
     this.form = this.fb.group({
       title: [formValue.title, [Validators.required]],
-      description: formValue.description
+      description: formValue.description,
+      state: [formValue.state, [Validators.required]],
     });
   }
 
