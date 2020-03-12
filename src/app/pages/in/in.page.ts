@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import 'firebase/firestore';
 import { Observable } from 'rxjs';
-import { ActionSheetController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 
 export interface GeneralItem {
   id: string;
