@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import 'firebase/firestore';
 import { Observable } from 'rxjs';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 
 export interface GeneralItem {
   id: string;
@@ -25,7 +25,8 @@ export class InPage implements OnInit {
   constructor(
     private router: Router,
     private firestore: AngularFirestore,
-    private actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private alertController: AlertController,
   ) { }
 
   ngOnInit() {
@@ -47,8 +48,24 @@ export class InPage implements OnInit {
     this.router.navigate(['/item-detail'], { state: { item, mode: 'edit' } });
   }
 
-  public deleteItem(item: GeneralItem): void {
-    this.itemsCollection.doc<GeneralItem>(item.id).delete();
+  public async deleteItem(item: GeneralItem) {
+    const alert = await this.alertController.create({
+      message: `Are you sure you want to delete <strong>${item.title}</strong>?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.itemsCollection.doc<GeneralItem>(item.id).delete();
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   public async moveItem(item: GeneralItem): Promise<any> {
