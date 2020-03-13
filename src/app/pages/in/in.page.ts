@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import 'firebase/firestore';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 import { ActionSheetController, AlertController } from '@ionic/angular';
+import { FormControl } from '@angular/forms';
 
 export interface GeneralItem {
   id: string;
@@ -20,7 +22,10 @@ export interface GeneralItem {
 export class InPage implements OnInit {
 
   private itemsCollection: AngularFirestoreCollection<GeneralItem>;
-  public items: Observable<GeneralItem[]>;
+  private items$: Observable<GeneralItem[]>;
+  public filteredItems$: Observable<GeneralItem[]>;
+  public filterControl = new FormControl('');
+  private filterValue$: Observable<string>;
 
   constructor(
     private router: Router,
@@ -31,7 +36,17 @@ export class InPage implements OnInit {
 
   ngOnInit() {
     this.itemsCollection = this.firestore.collection<GeneralItem>('items', ref => ref.where('state', '==', 'in'));
-    this.items = this.itemsCollection.valueChanges({ idField: 'id' });
+    this.items$ = this.itemsCollection.valueChanges({ idField: 'id' });
+    this.filterValue$ = this.filterControl.valueChanges.pipe(startWith(''));
+    this.filteredItems$ = combineLatest([this.items$, this.filterValue$])
+      .pipe(
+        map(([items, filterString]) => this._filter(items, filterString))
+      );
+  }
+
+  private _filter(items: GeneralItem[], filterValue: string): GeneralItem[] {
+    filterValue = filterValue.toLowerCase();
+    return items.filter(item => item.title.toLowerCase().indexOf(filterValue) !== -1);
   }
 
   public addItem(): void {
