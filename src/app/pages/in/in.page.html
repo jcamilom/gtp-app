@@ -5,8 +5,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-searchbar [formControl]="filterControl"></ion-searchbar>
   <ion-list>
-    <ion-item-sliding *ngFor="let item of items | async">
+    <ion-item-sliding *ngFor="let item of filteredItems$ | async">
       <ion-item (click)="editItem(item)">
         <ion-label>{{ item.title }}</ion-label>
       </ion-item>
