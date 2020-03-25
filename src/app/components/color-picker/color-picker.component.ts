@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PopoverController, NavParams } from '@ionic/angular';
 
 export interface Color {
   name: string;
@@ -22,8 +23,6 @@ const DEFAULT_COLORS: Color[][] = [
   ]
 ];
 
-const DEFAULT_SELECTED_COLOR: Color = { name: 'peter river', value: '#3498db' };
-
 @Component({
   selector: 'app-color-picker',
   templateUrl: './color-picker.component.html',
@@ -33,10 +32,21 @@ export class ColorPickerComponent implements OnInit {
 
   public colors: Color[][] = DEFAULT_COLORS;
 
-  public selected: Color = DEFAULT_SELECTED_COLOR;
+  public selected: Color;
 
-  constructor() { }
+  constructor(
+    private popoverController: PopoverController,
+    private navParams: NavParams,
+  ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.navParams.data.selected) {
+      this.selected = this.navParams.data.selected;
+    }
+  }
+
+  public select(color: Color): void {
+    this.popoverController.dismiss(color, 'selected');
+  }
 
 }
