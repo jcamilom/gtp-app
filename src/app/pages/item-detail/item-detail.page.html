@@ -8,12 +8,11 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="clicked($event)">Default</ion-button>
-
   <form [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
     <ion-item>
       <ion-label position="stacked">Title</ion-label>
       <ion-input type="text" formControlName="title"></ion-input>
+      <span class="color" (click)="colorPicked($event)" slot="end" [style.background-color]="color"></span>
     </ion-item>
     <ion-item>
       <ion-label>State</ion-label>

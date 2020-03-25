@@ -20,6 +20,7 @@ export class ItemDetailPage implements OnInit {
   private item: GeneralItem;
   private mode: string;
   public stateOptions = ['in', 'next'];
+  public color: string;
 
   constructor(
     private router: Router,
@@ -30,7 +31,7 @@ export class ItemDetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    const formValue: GeneralItem = { id: '', title: '', description: '', state: '' };
+    const formValue: GeneralItem = { id: '', title: '', description: '', state: '', color: '' };
     const navigation = this.router.getCurrentNavigation();
     if (navigation.extras.state) {
       this.item = navigation.extras.state.item;
@@ -38,6 +39,8 @@ export class ItemDetailPage implements OnInit {
       if (this.mode === 'edit') {
         formValue.title = this.item.title;
         formValue.description = this.item.description;
+        formValue.color = this.item.color;
+        this.color = this.item.color;
       }
       formValue.state = this.item.state;
     }
@@ -45,6 +48,7 @@ export class ItemDetailPage implements OnInit {
       title: [formValue.title, [Validators.required]],
       description: formValue.description,
       state: [formValue.state, [Validators.required]],
+      color: formValue.color,
     });
   }
 
@@ -75,15 +79,18 @@ export class ItemDetailPage implements OnInit {
     this.location.back();
   }
 
-  async clicked(ev: any) {
+  async colorPicked(ev: any) {
     const popover = await this.popoverController.create({
       component: ColorPickerComponent,
       event: ev,
       componentProps: { selected: { name: 'peter river', value: '#3498db' } }
     });
     popover.style.cssText = '--min-width: 160px; --max-width: 160px;';
-    popover.onWillDismiss().then(data => {
-      console.log('to be closed with', data)
+    popover.onWillDismiss().then(result => {
+      if (result.role === 'selected') {
+        this.form.patchValue({ color: result.data.value });
+        this.color = result.data.value;
+      }
     });
     return await popover.present();
   }
