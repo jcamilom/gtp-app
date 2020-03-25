@@ -8,6 +8,8 @@ import { ItemDetailPageRoutingModule } from './item-detail-routing.module';
 
 import { ItemDetailPage } from './item-detail.page';
 
+import { ColorPickerComponent } from '../../components/color-picker/color-picker.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +18,7 @@ import { ItemDetailPage } from './item-detail.page';
     IonicModule,
     ItemDetailPageRoutingModule
   ],
-  declarations: [ItemDetailPage]
+  declarations: [ItemDetailPage, ColorPickerComponent],
+  entryComponents: [ColorPickerComponent],
 })
 export class ItemDetailPageModule {}

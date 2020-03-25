@@ -5,6 +5,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GeneralItem } from '../in/in.page';
 import { AngularFirestore } from '@angular/fire/firestore';
 import 'firebase/firestore';
+import { PopoverController } from '@ionic/angular';
+import { ColorPickerComponent } from '../../components/color-picker/color-picker.component';
 
 @Component({
   selector: 'app-item-detail',
@@ -24,6 +26,7 @@ export class ItemDetailPage implements OnInit {
     private fb: FormBuilder,
     private location: Location,
     private firestore: AngularFirestore,
+    private popoverController: PopoverController,
   ) { }
 
   ngOnInit() {
@@ -70,6 +73,19 @@ export class ItemDetailPage implements OnInit {
 
   public navigateBack(): void {
     this.location.back();
+  }
+
+  async clicked(ev: any) {
+    const popover = await this.popoverController.create({
+      component: ColorPickerComponent,
+      event: ev,
+      componentProps: { selected: { name: 'peter river', value: '#3498db' } }
+    });
+    popover.style.cssText = '--min-width: 160px; --max-width: 160px;';
+    popover.onWillDismiss().then(data => {
+      console.log('to be closed with', data)
+    });
+    return await popover.present();
   }
 
 }

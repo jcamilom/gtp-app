@@ -8,6 +8,8 @@
 </ion-header>
 
 <ion-content>
+  <ion-button (click)="clicked($event)">Default</ion-button>
+
   <form [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
     <ion-item>
       <ion-label position="stacked">Title</ion-label>
