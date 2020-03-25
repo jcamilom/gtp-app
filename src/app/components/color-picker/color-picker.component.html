@@ -1,0 +1,3 @@
+<div *ngFor="let row of colors" class="row">
+  <span *ngFor="let color of row" [style.background-color]="color.value" [class.selected]="color.value === selected.value"></span>
+</div>
