@@ -79,7 +79,7 @@ export class ItemDetailPage implements OnInit {
     this.location.back();
   }
 
-  async colorPicked(ev: any) {
+  async pickColor(ev: any) {
     const popover = await this.popoverController.create({
       component: ColorPickerComponent,
       event: ev,

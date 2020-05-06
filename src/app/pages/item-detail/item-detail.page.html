@@ -12,7 +12,9 @@
     <ion-item>
       <ion-label position="stacked">Title</ion-label>
       <ion-input type="text" formControlName="title"></ion-input>
-      <span class="color" (click)="colorPicked($event)" slot="end" [style.background-color]="color"></span>
+      <span class="color" (click)="pickColor($event)" slot="end"
+        [style.background-color]="color" [class.empty]="!color">
+      </span>
     </ion-item>
     <ion-item>
       <ion-label>State</ion-label>
