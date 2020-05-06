@@ -12,6 +12,7 @@ export interface GeneralItem {
   title: string;
   state: string;
   description?: string;
+  color?: string;
 }
 
 @Component({

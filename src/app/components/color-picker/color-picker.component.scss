@@ -1,0 +1,20 @@
+:host {
+  padding: 5px;
+}
+div.row {
+  display: flex;
+  &:not(:first-child) {
+    margin-top: 4px;
+  }
+  span {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    &:not(:first-child) {
+      margin-left: 6px;
+    }
+    &.selected {
+      border: solid 2px #574f4f;
+    }
+  }
+}
