@@ -83,7 +83,7 @@ export class ItemDetailPage implements OnInit {
     const popover = await this.popoverController.create({
       component: ColorPickerComponent,
       event: ev,
-      componentProps: { selected: { name: 'peter river', value: '#3498db' } }
+      componentProps: { selected: this.color }
     });
     popover.style.cssText = '--min-width: 160px; --max-width: 160px;';
     popover.onWillDismiss().then(result => {

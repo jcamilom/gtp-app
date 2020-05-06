@@ -32,7 +32,7 @@ export class ColorPickerComponent implements OnInit {
 
   public colors: Color[][] = DEFAULT_COLORS;
 
-  public selected: Color;
+  public selected: string; // TODO: use Type or Enum
 
   constructor(
     private popoverController: PopoverController,
