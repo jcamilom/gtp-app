@@ -19,7 +19,9 @@
         </ion-item-option>
       </ion-item-options>
       <ion-item (click)="editItem(item)">
-        <ion-label>{{ item.title }}</ion-label>
+        <ion-label class="colored-label" [style.border-color]="item.color ? item.color : '#ffffff'">
+          {{ item.title }}
+        </ion-label>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="light" (click)="completeItem(item)">
