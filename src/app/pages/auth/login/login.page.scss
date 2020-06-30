@@ -1,0 +1,7 @@
+div.error-messages > span {
+  color: var(--ion-color-danger);
+  font-size: 10px;
+  &:not(:first-child) {
+    display: none;
+  }
+}
