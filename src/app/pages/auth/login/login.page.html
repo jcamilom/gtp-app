@@ -4,10 +4,17 @@
       <ion-label position="stacked">Email</ion-label>
       <ion-input type="email" formControlName="email" required></ion-input>
     </ion-item>
+    <div *ngIf="email.errors && (email.dirty || email.touched)" class="error-messages">
+      <span *ngIf="email.hasError('required')">The field is required</span>
+      <span *ngIf="email.hasError('pattern')">The value must be an email address</span>
+    </div>
     <ion-item>
       <ion-label position="stacked">Password</ion-label>
       <ion-input type="password" formControlName="password" required></ion-input>
     </ion-item>
+    <div *ngIf="password.errors && (password.dirty || password.touched)" class="error-messages">
+      <span *ngIf="password.hasError('required')">The field is required</span>
+    </div>
     <ion-row>
       <ion-col>
         <ion-button type="submit" [disabled]="form.invalid" expand="block">Login</ion-button>

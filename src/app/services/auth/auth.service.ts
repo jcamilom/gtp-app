@@ -14,4 +14,8 @@ export class AuthService {
     return from(this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password));
   }
 
+  public login(email: string, password: string): Observable<auth.UserCredential> {
+    return from(this.angularFireAuth.auth.signInWithEmailAndPassword(email, password));
+  }
+
 }
