@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 // tslint:disable-next-line: max-line-length
 const emailRegExp: RegExp = /^(([^<>()\[\]\\.,;:\s@'+|={}`"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -15,6 +16,7 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
@@ -25,12 +27,18 @@ export class RegisterPage implements OnInit {
   }
 
   public submitForm(): void {
-    console.log(this.form.value);
+    const { email, password } = this.form.value;
+    this.authService.register(email.trim(), password).subscribe(
+      (resp) => {
+        console.log(resp);
+      }, (err) => {
+        console.error(err);
+      }
+    );
   }
 
   get email() { return this.form.get('email'); }
 
   get password() { return this.form.get('password'); }
-
 
 }
